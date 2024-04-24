@@ -1,6 +1,6 @@
 # Лабораторная работа №2
 
-![Диаграмма](https://github.com/HungryLite/Rtippo/blob/main/images/lab2(v2.0).png)
+![Диаграмма](https://github.com/HungryLite/Rtippo/blob/main/images/lab2(v2.1).png)
 
 Связи:
 - __Игра__ содержит __Игроков__, __Сдающего__, __Колоду карт__ и __Ходы__.
