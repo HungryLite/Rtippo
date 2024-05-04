@@ -91,7 +91,7 @@
 
 ### Прецедент «Сдача карт»
 
-![Диаграмма](https://github.com/HungryLite/Rtippo/blob/main/images/lab3(2).drawio.png)
+![Диаграмма](https://github.com/HungryLite/Rtippo/blob/main/images/lab3(2.0).drawio.png)
 
 | Действие    | Определить Сдающего |
 |:------------|:-|
