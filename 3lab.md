@@ -2,7 +2,7 @@
 
 ### Прецедент «Сделать предварительную ставку»
 
-![Диаграмма](https://github.com/HungryLite/Rtippo/blob/main/images/lab3.drawio.png)
+![Диаграмма](https://github.com/HungryLite/Rtippo/blob/main/images/lab3(1).drawio.png)
 
 | Действие    | Запустить игру |
 |:------------|:-|
@@ -108,7 +108,7 @@
 
 ### Прецедент «Принять решение о ставке»
 
-![Диаграмма](https://github.com/HungryLite/Rtippo/blob/main/images/lab3(3).drawio.png)
+![Диаграмма](https://github.com/HungryLite/Rtippo/blob/main/images/lab3(3.0).drawio.png)
 
 | Действие    | Нажать на кнопку «Начать» |
 |:------------|:-|
