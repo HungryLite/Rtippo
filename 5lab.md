@@ -1,6 +1,6 @@
 # Лабораторная работа №5
 
-![Диаграмма](https://github.com/HungryLite/Rtippo/blob/main/images/lab5(1).drawio.png)
+![Диаграмма](https://github.com/HungryLite/Rtippo/blob/main/images/lab5.drawio.png)
 
 ### Класс «Player» (Игрок)
 
