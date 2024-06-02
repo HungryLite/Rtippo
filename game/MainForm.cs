@@ -99,20 +99,20 @@ namespace game
 		}
 		
 		internal class Game
-    	{
-            private static Game instance; 
-            public static Game Instance
-	        {
-	            get
-	            {
-	                if (instance == null)
-	                {
-	                    instance = new Game();
-	                }
+    		{
+            		private static Game instance; 
+            		public static Game Instance
+	        	{
+	            		get
+	            		{
+	                		if (instance == null)
+	                		{
+	                    			instance = new Game();
+	                		}
 
-	                return instance;
-	            }
-        	}
+	                		return instance;
+	            		}
+        		}
 
 			public List<Player> Players;
 			public Bank Bank;
@@ -123,39 +123,39 @@ namespace game
 			public int DealerIndex;
 			public int IsSpectatorCount;
 
-	        private Game()
-	        {
+	        	private Game()
+	        	{
 				Initialize();
 			}
 
-	        public void Initialize()
-	        {
-	            Players = new List<Player>();
-	            Deck = new Deck();
-	            Bank = new Bank(0);
-	            Round = 1;
-	            Bets = 0;
-	            CurrentPlayerIndex = 0;
-	            DealerIndex = 0;
-	            IsSpectatorCount = 0;
-	        }
+		        public void Initialize()
+		        {
+		            Players = new List<Player>();
+		            Deck = new Deck();
+		            Bank = new Bank(0);
+		            Round = 1;
+		            Bets = 0;
+		            CurrentPlayerIndex = 0;
+		            DealerIndex = 0;
+		            IsSpectatorCount = 0;
+		        }
 
-	        public void AddPlayers(DataGridView dataGridView, string mainname, int balance)
-		    {
-		    	Instance.Players.Add(new Player(mainname, balance));
-		        foreach (DataGridViewRow row in dataGridView.Rows)
+	        	public void AddPlayers(DataGridView dataGridView, string mainname, int balance)
+		    	{
+			    	Instance.Players.Add(new Player(mainname, balance));
+			        foreach (DataGridViewRow row in dataGridView.Rows)
 				{
-				    if (!row.IsNewRow)
-				    {
-				        // Получаем данные из ячеек
-				        string name = row.Cells["ID"].Value.ToString();
-				        Instance.Players.Add(new Player(name, balance));
-				    }
+					if (!row.IsNewRow)
+					{
+						// Получаем данные из ячеек
+					        string name = row.Cells["ID"].Value.ToString();
+					        Instance.Players.Add(new Player(name, balance));
+					}
 				}
-		    }
+		    	}
 
-	        //получение решения для бота
-		    public bool GetRandomBool()
+	        	//получение решения для бота
+		    	public bool GetRandomBool()
 			{
 			    return random.Next(2) == 0; // 0 или 1 (false или true)
 			}
@@ -163,9 +163,9 @@ namespace game
 			//случайная ставка
 			public int GetRandomBetAmount(int playerMoney, int bet, int bank)
 			{
-		        int maxBetAmount = Math.Min(playerMoney, bank);
-		        // Генерируем случайную ставку от bet до maxBetAmount
-		        return random.Next(bet, maxBetAmount + 1);
+		        	int maxBetAmount = Math.Min(playerMoney, bank);
+		        	// Генерируем случайную ставку от bet до maxBetAmount
+		        	return random.Next(bet, maxBetAmount + 1);
 			}
 
 			//проверка выигрыша
@@ -183,7 +183,7 @@ namespace game
 
 			    else
 			    {
-			   		return -bet;
+			   	return -bet;
 			    }
 			}
 			
@@ -225,10 +225,10 @@ namespace game
 			{
 				int i = 0;
 				if (Instance.Bank.TotalMoney >= Instance.Bets * (Instance.Players.Count) * 4)
-			    {
-				    labelinfo.Visible = true;
-				    labelinfo.BackColor = Color.FromArgb(0, 0, 255); // синий
-				    labelinfo.Text = " Раунд " + Convert.ToString(Instance.Round) + " Раздел банка ";
+			    	{
+					labelinfo.Visible = true;
+				    	labelinfo.BackColor = Color.FromArgb(0, 0, 255); // синий
+				    	labelinfo.Text = " Раунд " + Convert.ToString(Instance.Round) + " Раздел банка ";
 					await Task.Delay(2000);
 				    
 					foreach (Player player in Instance.Players)
@@ -245,46 +245,46 @@ namespace game
 					{
 						if (!player.IsSpectator)
 						{
-			        		betPerPlayer = Convert.ToInt32(Math.Floor((double)totalBankMoney / i));
+			        			betPerPlayer = Convert.ToInt32(Math.Floor((double)totalBankMoney / i));
 							player.Money += betPerPlayer;
 						}
 					}
 
 					Instance.Bank.RemoveMoney(totalBankMoney);
 					listBox1.Items.Add("Доля игроков: " + betPerPlayer);
-			    }
+			    	}
 			}
 			
 			public void DistributionPlayerCard()
 			{
 				Deck.InitializeDeck();
 				foreach (Player player in Game.Instance.Players)
-			    {
+			    	{
 					player.Hand.Clear();
-			        if (!player.IsSpectator)
-			        {
-			            player.Hand.Add(Deck.DealCard());
-			            player.Hand.Add(Deck.DealCard());
-			        }
-			    }
+			        	if (!player.IsSpectator)
+			        	{
+			            		player.Hand.Add(Deck.DealCard());
+			            		player.Hand.Add(Deck.DealCard());
+			        	}
+			    	}
 			}
 			
 			async public Task CheckPlayers(Label labelinfo, ListBox listBox1)
 			{
 				foreach (Player player in Game.Instance.Players)
-			    {
-			        if ((!player.IsSpectator) && (player.Money < Game.Instance.Bets))
-			        {
+			    	{
+			        	if ((!player.IsSpectator) && (player.Money < Game.Instance.Bets))
+			        	{
 			        		player.IsSpectator = true;
 			        		labelinfo.Visible = true;
-						    labelinfo.BackColor = Color.FromArgb(0, 0, 255);
-							labelinfo.Text = "Выбывает " + player.Name;
-							listBox1.Items.Add("Выбывает " + player.Name);
-							await Task.Delay(2000);
-							labelinfo.Visible = false;
-							Game.Instance.IsSpectatorCount++;
-			        }
-			    }
+						labelinfo.BackColor = Color.FromArgb(0, 0, 255);
+						labelinfo.Text = "Выбывает " + player.Name;
+						listBox1.Items.Add("Выбывает " + player.Name);
+						await Task.Delay(2000);
+						labelinfo.Visible = false;
+						Game.Instance.IsSpectatorCount++;
+			        	}
+			    	}
 			}
 			
 			public void AddMoneyBank(ListBox ListBox1)
@@ -292,15 +292,15 @@ namespace game
 				ListBox1.Items.Add("------------------");
 				ListBox1.Items.Add("Игроки скидываются");
 				foreach (Player player in Game.Instance.Players)
-			    {
-			        if (!player.IsSpectator)
-			        {
-			            int betAmount = Game.Instance.Bets;
-			            player.Money -= betAmount;
-			            Game.Instance.Bank.AddMoney(betAmount);
-			            ListBox1.Items.Add(player.Name + " баланс: " + player.Money);
-			        }
-			    }
+			    	{
+				        if (!player.IsSpectator)
+				        {
+				            int betAmount = Game.Instance.Bets;
+				            player.Money -= betAmount;
+				            Game.Instance.Bank.AddMoney(betAmount);
+				            ListBox1.Items.Add(player.Name + " баланс: " + player.Money);
+				        }
+			    	}
 
 				ListBox1.Items.Add("Банк: " + Convert.ToString(Game.Instance.Bank.TotalMoney));
 			}
@@ -310,53 +310,55 @@ namespace game
 			{
 				globalVariable = 0;
 				while (globalVariable == 0)
-		        {
-		        	await Task.Delay(1000);
-		        	if (((globalVariable > Math.Min(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money, 
-						Game.Instance.Bank.TotalMoney)) || (globalVariable < Bets)) && (globalVariable != 0))
 		        	{
-		        		if (globalVariable == -1)
-		        		{
-		        			break;
-		        		}
-		        		globalVariable = 0;
-		        		MessageBox.Show("Ошибка ввода ставки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			        	await Task.Delay(1000);
+			        	if (((globalVariable > Math.Min(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money, 
+							Game.Instance.Bank.TotalMoney)) || (globalVariable < Bets)) && (globalVariable != 0))
+			        	{
+			        		if (globalVariable == -1)
+			        		{
+			        			break;
+			        		}
+	     
+			        		globalVariable = 0;
+			        		MessageBox.Show("Ошибка ввода ставки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			        	}
 		        	}
-		        }
 
 				int betAmount = globalVariable;
-			    if (betAmount != -1)
-			    {
-		            Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand.Add(Deck.DealCard());
-		            labelCardInfoThree.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[2].Suit, 
+			    	if (betAmount != -1)
+			    	{
+		            		Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand.Add(Deck.DealCard());
+		            		labelCardInfoThree.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[2].Suit, 
 						Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[2].Rank)];
 
-		            int win = CalculateWinnings(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand, betAmount);
-		            if (win > 0)
-		            {
-		            	MessageBox.Show("Вы выиграли", "Победа", MessageBoxButtons.OK, MessageBoxIcon.Information);
-		            }
-		            else
-		            {
-		            	MessageBox.Show("Ставка не выиграла", "Поражение", MessageBoxButtons.OK, MessageBoxIcon.Error);
-		            }
+		            		int win = CalculateWinnings(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand, betAmount);
+		            		if (win > 0)
+		            		{
+		            			MessageBox.Show("Вы выиграли", "Победа", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		            		}
+		
+		            		else
+		            		{
+		            			MessageBox.Show("Ставка не выиграла", "Поражение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		           		}
 			            			
-			        Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money += win;
-			        //добавление информации в listbox
+			        	Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money += win;
+			        	//добавление информации в listbox
 					listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Поставил: " + 
 						Convert.ToString(betAmount));
 
-				    listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Итого: " + Convert.ToString(win));
-				    listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Баланс: " + 
+				    	listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Итого: " + Convert.ToString(win));
+				    	listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Баланс: " + 
 						Convert.ToString(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money));
 
-				    listBox1.Items.Add("Итого банк: " + Convert.ToString(-win));
-				    Game.Instance.Bank.AddMoney(-win);
-				    listBox1.Items.Add("Баланс банка: " + Convert.ToString(Game.Instance.Bank.TotalMoney));
-			    }
+				    	listBox1.Items.Add("Итого банк: " + Convert.ToString(-win));
+				    	Game.Instance.Bank.AddMoney(-win);
+				    	listBox1.Items.Add("Баланс банка: " + Convert.ToString(Game.Instance.Bank.TotalMoney));
+			    	}
 
 				else
-                {
+                		{
 					listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " отказался от ставки");
 				}
 			}
@@ -364,66 +366,66 @@ namespace game
 			async public Task BotMove(Label labelCardInfoThree, ListBox listBox1, ImageList imageList1, Label labelinfo)
 			{
 				bool willBet = GetRandomBool(); // Случайное решение о ставке (true или false)
-			    int betAmount = 0;
-			    if (willBet)
-			    {
-			        if (Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money >= Bets)
-			        {
-			            betAmount = GetRandomBetAmount(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money, Bets, 
-							Game.Instance.Bank.TotalMoney);
-			        }
-			    }
+			    	int betAmount = 0;
+			    	if (willBet)
+			    	{
+				        if (Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money >= Bets)
+				        {
+				            betAmount = GetRandomBetAmount(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money, Bets, 
+								Game.Instance.Bank.TotalMoney);
+				        }
+			    	}
 
-			    await Task.Delay(2000);
-			    if (betAmount > 0)
-			    {
-			        Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand.Add(Deck.DealCard());
-			        labelCardInfoThree.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[2].Suit, 
+			    	await Task.Delay(2000);
+			    	if (betAmount > 0)
+			    	{
+			        	Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand.Add(Deck.DealCard());
+			        	labelCardInfoThree.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[2].Suit, 
 						Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[2].Rank)];
 
-			        int win = CalculateWinnings(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand, betAmount);
-			        Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money += win;
+			        	int win = CalculateWinnings(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand, betAmount);
+			        	Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money += win;
 
-		            //добавление информации в listbox
-				    listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Поставил: " + 
+		            		//добавление информации в listbox
+				    	listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Поставил: " + 
 						Convert.ToString(betAmount));
 
-			        listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Итого: " + Convert.ToString(win));
-			        listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Баланс: " + Convert.ToString
+			        	listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Итого: " + Convert.ToString(win));
+			        	listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Баланс: " + Convert.ToString
 						(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money));
 
-			        listBox1.Items.Add("Итого банк: " + Convert.ToString(-win));
+			        	listBox1.Items.Add("Итого банк: " + Convert.ToString(-win));
 			        
-			        Game.Instance.Bank.AddMoney(-win);
-			        listBox1.Items.Add("\nБаланс банка: " + Convert.ToString(Game.Instance.Bank.TotalMoney));
+			        	Game.Instance.Bank.AddMoney(-win);
+			        	listBox1.Items.Add("\nБаланс банка: " + Convert.ToString(Game.Instance.Bank.TotalMoney));
 
-			        if (win < 0)
-			        {
-			            labelinfo.BackColor = Color.FromArgb(255, 0, 0);
-			            labelinfo.Visible = true;
-			            labelinfo.Text = Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Проиграл ставку " + 
+			        	if (win < 0)
+			        	{
+			            		labelinfo.BackColor = Color.FromArgb(255, 0, 0);
+			            		labelinfo.Visible = true;
+			            		labelinfo.Text = Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Проиграл ставку " + 
 							Convert.ToString(-win);
-			        }
+			        	}
 
-			        else
-			        {
-			            labelinfo.BackColor = Color.FromArgb(0, 255, 0);
-			            labelinfo.Visible = true;
-			            labelinfo.Text = Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Выиграл ставку " + 
+			        	else
+			        	{
+			            		labelinfo.BackColor = Color.FromArgb(0, 255, 0);
+			            		labelinfo.Visible = true;
+			            		labelinfo.Text = Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Выиграл ставку " + 
 							Convert.ToString(win);
-			        }
-			    }
+			        	}
+			    	}
 
-			    else
-			    {
+			    	else
+			    	{
 					labelinfo.BackColor = Color.FromArgb(0, 0, 255);
 					labelinfo.Visible = true;
 					labelinfo.Text = Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " Не поставил ставку";
 					listBox1.Items.Add(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Name + " отказался от ставки");
-			    }
+			    	}
 
-			    await Task.Delay(3000);
-			    labelinfo.Visible = false;
+			    	await Task.Delay(3000);
+			    	labelinfo.Visible = false;
 			}
 		}
 		
@@ -437,21 +439,21 @@ namespace game
 		//загрузка формы (подготовка tabControl)
 		void MainFormLoad(object sender, EventArgs e)
 		{
-            tabControl1.Appearance = TabAppearance.FlatButtons;
-            tabControl1.ItemSize = new Size(0, 1);
-            tabControl1.SizeMode = TabSizeMode.Fixed;
-        }
-        //кнопка начать игру
-        void StartClick(object sender, EventArgs e)
+            		tabControl1.Appearance = TabAppearance.FlatButtons;
+            		tabControl1.ItemSize = new Size(0, 1);
+            		tabControl1.SizeMode = TabSizeMode.Fixed;
+        	}
+        	//кнопка начать игру
+        	void StartClick(object sender, EventArgs e)
 		{
 			//подготовка таблицы для имени
 			dataGridView1.Rows.Clear();
 			dataGridView1.AllowUserToAddRows = false;
 			dataGridView1.ColumnCount = 1;
-	        dataGridView1.Columns[0].Name = "ID";
-	        dataGridView1.Rows.Add("Бот1");
-	        numericUpDown1.Value = 1;
-	        //переключение tabControl на настройки игры
+	        	dataGridView1.Columns[0].Name = "ID";
+	        	dataGridView1.Rows.Add("Бот1");
+	        	numericUpDown1.Value = 1;
+	        	//переключение tabControl на настройки игры
 			tabControl1.SelectTab(1);
 			//очистка старых значений
 			label.Text = "";
@@ -463,7 +465,7 @@ namespace game
 			dataGridView1.Rows.Clear();
 			int rowCount = (int)numericUpDown1.Value; // Получаем значение из NumericUpDown
 			dataGridView1.ColumnCount = 1; // Установка количества столбцов
-	        dataGridView1.Columns[0].Name = "ID"; // Имя первого столбца
+	        	dataGridView1.Columns[0].Name = "ID"; // Имя первого столбца
 
 			// Добавление строк
 			for (int i = 0; i < rowCount; i++)
@@ -493,7 +495,7 @@ namespace game
 				}
 
 				else
-                {
+                		{
 					Game.Instance.AddPlayers(dataGridView1, mainname, balance);
 					Game.Instance.Bets = bet;
 					tabControl1.SelectTab(2);
@@ -563,8 +565,8 @@ namespace game
 				await OutputInfo(labelinfo, " Раунд " + Convert.ToString(Game.Instance.Round) + " раздает " + 
 					Game.Instance.Players[Game.Instance.DealerIndex].Name);
 
-			    await Task.Delay(2000);
-			    labelround.Text = "Раунд " + Convert.ToString(Game.Instance.Round);
+			    	await Task.Delay(2000);
+			    	labelround.Text = "Раунд " + Convert.ToString(Game.Instance.Round);
 				//проверка на выигрыш в игре
 				if ((Game.Instance.Players.Count == Game.Instance.IsSpectatorCount + 1) && (!Game.Instance.Players[0].IsSpectator))
 				{
@@ -592,20 +594,20 @@ namespace game
 					}
 
 					if(!Game.Instance.Players[Game.Instance.CurrentPlayerIndex].IsSpectator)
-		        	{
+		        		{
 						label5.Text = "Баланс игрока: " + Convert.ToString(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money);
-		        		label5.Text += "\nБаланс банка: " + Convert.ToString(Game.Instance.Bank.TotalMoney);
-		        		//задаем картинки для карт
-		        		labelCardInfoOne.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[0].Suit, 
+		        			label5.Text += "\nБаланс банка: " + Convert.ToString(Game.Instance.Bank.TotalMoney);
+		        			//задаем картинки для карт
+		        			labelCardInfoOne.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[0].Suit, 
 							Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[0].Rank)];
 
-		        		labelCardInfoTwo.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[1].Suit, 
+		        			labelCardInfoTwo.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[1].Suit, 
 							Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[1].Rank)];
 
-		        		labelCardInfoThree.Image = imageList1.Images[52];
-		        		//проверка игроков
+		        			labelCardInfoThree.Image = imageList1.Images[52];
+		        			//проверка игроков
 		        		
-			        	if (Game.Instance.CurrentPlayerIndex != 0)
+			        		if (Game.Instance.CurrentPlayerIndex != 0)
 						{
 							//ход бота
 							await Game.Instance.BotMove(labelCardInfoThree, listBox1, imageList1, labelinfo);
@@ -618,14 +620,13 @@ namespace game
 							label.BackColor = Color.FromArgb(0, 255, 0);
 							//ждем пока игрок не выберет ставку
 							await Game.Instance.PlayerMove(labelCardInfoThree, listBox1, imageList1);
-	
-				        }
+				        	}
 					}
 
 					if (Game.Instance.Bank.TotalMoney < Game.Instance.Bets)
 					{
 						await OutputInfo(labelinfo, "Конец раунда, деньги в «пул»-банке закончились");
-					    break;
+					    	break;
 					}
 				}
 
