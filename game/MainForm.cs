@@ -19,21 +19,21 @@ namespace game
 		//загрузка формы (подготовка tabControl)
 		void MainFormLoad(object sender, EventArgs e)
 		{
-            tabControl1.Appearance = TabAppearance.FlatButtons;
-            tabControl1.ItemSize = new Size(0, 1);
-            tabControl1.SizeMode = TabSizeMode.Fixed;
-        }
-        //кнопка начать игру
-        void StartClick(object sender, EventArgs e)
+            		tabControl1.Appearance = TabAppearance.FlatButtons;
+            		tabControl1.ItemSize = new Size(0, 1);
+            		tabControl1.SizeMode = TabSizeMode.Fixed;
+        	}
+        	//кнопка начать игру
+        	void StartClick(object sender, EventArgs e)
 		{
 			//подготовка таблицы для имени
 			tableBots.Rows.Clear();
 			tableBots.AllowUserToAddRows = false;
 			tableBots.ColumnCount = 1;
-	        tableBots.Columns[0].Name = "ID";
-	        tableBots.Rows.Add("Бот1");
-	        fieldBot.Value = 1;
-	        //переключение tabControl на настройки игры
+	        	tableBots.Columns[0].Name = "ID";
+	        	tableBots.Rows.Add("Бот1");
+	        	fieldBot.Value = 1;
+	        	//переключение tabControl на настройки игры
 			tabControl1.SelectTab(1);
 			//очистка старых значений
 			panelInfo.Text = "";
@@ -45,7 +45,7 @@ namespace game
 			tableBots.Rows.Clear();
 			int rowCount = (int)fieldBot.Value; // Получаем значение из NumericUpDown
 			tableBots.ColumnCount = 1; // Установка количества столбцов
-	        tableBots.Columns[0].Name = "ID"; // Имя первого столбца
+	        	tableBots.Columns[0].Name = "ID"; // Имя первого столбца
 
 			// Добавление строк
 			for (int i = 0; i < rowCount; i++)
@@ -66,8 +66,8 @@ namespace game
 			
 			try
 			{
-			    balance = int.Parse(fieldBalance.Text);
-			    bet = int.Parse(fieldBet.Text);
+			    	balance = int.Parse(fieldBalance.Text);
+			    	bet = int.Parse(fieldBet.Text);
 
 				if((bet > balance) || (bet <= 0) || (balance <= 0) || (bet * 2 > balance))
 				{
@@ -75,7 +75,7 @@ namespace game
 				}
 
 				else
-                {
+                		{
 					Game.Instance.AddPlayers(tableBots, mainname, balance);
 					Game.Instance.Bets = bet;
 					tabControl1.SelectTab(2);
@@ -88,29 +88,29 @@ namespace game
 			}
 		}
 
-        public static int CardInfo(string suit, int rank)
-        {
-            int value = 0;
-            switch (suit)
-            {
-                case "Бубны":
-                    value = rank;
-                    break;
-                case "Трефы":
-                    value = rank + 13;
-                    break;
-                case "Пики":
-                    value = rank + 26;
-                    break;
-                case "Черви":
-                    value = rank + 39;
-                    break;
-            }
+        	public static int CardInfo(string suit, int rank)
+        	{
+            		int value = 0;
+            		switch (suit)
+            		{
+                		case "Бубны":
+                    			value = rank;
+                    			break;
+                		case "Трефы":
+                    			value = rank + 13;
+                    			break;
+                		case "Пики":
+                    			value = rank + 26;
+                    			break;
+                		case "Черви":
+                    			value = rank + 39;
+                    			break;
+            		}
 
-            return value - 2;
-        }
-        //вывод инфы
-        public async Task OutputInfo(Label boardInfo, string text)
+            		return value - 2;
+        	}
+        	//вывод инфы
+        	public async Task OutputInfo(Label boardInfo, string text)
 		{
 			boardInfo.Visible = true;
 			boardInfo.BackColor = Color.FromArgb(0, 0, 255);
@@ -143,8 +143,8 @@ namespace game
 				await OutputInfo(boardInfo, " Раунд " + Convert.ToString(Game.Instance.Round) + " раздает " + 
 					Game.Instance.Players[Game.Instance.DealerIndex].Name);
 
-			    await Task.Delay(2000);
-			    roundInfo.Text = "Раунд " + Convert.ToString(Game.Instance.Round);
+			    	await Task.Delay(2000);
+			    	roundInfo.Text = "Раунд " + Convert.ToString(Game.Instance.Round);
 				//проверка на выигрыш в игре
 				if ((Game.Instance.Players.Count == Game.Instance.IsSpectatorCount + 1) && (!Game.Instance.Players[0].IsSpectator))
 				{
@@ -172,20 +172,20 @@ namespace game
 					}
 
 					if(!Game.Instance.Players[Game.Instance.CurrentPlayerIndex].IsSpectator)
-		        	{
+		        		{
 						BalanceBankInfo.Text = "Баланс игрока: " + Convert.ToString(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Money);
-		        		BalanceBankInfo.Text += "\nБаланс банка: " + Convert.ToString(Game.Instance.Bank.TotalMoney);
-		        		//задаем картинки для карт
-		        		labelCardInfoOne.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[0].Suit, 
+		        			BalanceBankInfo.Text += "\nБаланс банка: " + Convert.ToString(Game.Instance.Bank.TotalMoney);
+		        			//задаем картинки для карт
+		        			labelCardInfoOne.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[0].Suit, 
 							Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[0].Rank)];
 
-		        		labelCardInfoTwo.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[1].Suit, 
+		        			labelCardInfoTwo.Image = imageList1.Images[CardInfo(Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[1].Suit, 
 							Game.Instance.Players[Game.Instance.CurrentPlayerIndex].Hand[1].Rank)];
 
-		        		labelCardInfoThree.Image = imageList1.Images[52];
-		        		//проверка игроков
+		        			labelCardInfoThree.Image = imageList1.Images[52];
+		        			//проверка игроков
 		        		
-			        	if (Game.Instance.CurrentPlayerIndex != 0)
+			        		if (Game.Instance.CurrentPlayerIndex != 0)
 						{
 							//ход бота
 							await Game.Instance.BotMove(labelCardInfoThree, gameInfo, imageList1, boardInfo);
@@ -198,13 +198,13 @@ namespace game
 							panelInfo.BackColor = Color.FromArgb(0, 255, 0);
 							//ждем пока игрок не выберет ставку
 							await Game.Instance.PlayerMove(labelCardInfoThree, gameInfo, imageList1);
-				        }
+				        	}
 					}
 
 					if (Game.Instance.Bank.TotalMoney < Game.Instance.Bets)
 					{
 						await OutputInfo(boardInfo, "Конец раунда, деньги в «пул»-банке закончились");
-					    break;
+					    	break;
 					}
 				}
 
@@ -221,11 +221,13 @@ namespace game
 		{
 			try {
 				globalVariable = Convert.ToInt32(textBoxAmountBet.Text);
+    
 				if (globalVariable <= 0)
 				{
 					globalVariable = 0;
 					MessageBox.Show("Ошибка ввода ставки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
+    
 			} catch (Exception) {
 				MessageBox.Show("Ошибка ввода ставки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
